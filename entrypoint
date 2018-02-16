@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require_relative 'lib/mis_dies.rb'
+
+repo = ARGV[0]
+pull_request = ARGV[1]
+token = ARGV[2]
+
+if repo.nil? || pull_request.nil? || token.nil?
+  puts "Usage: mis-dies <repo_nane> <pull_request> <token>"
+  exit 1
+end
+
+response = MisDies.new(repo, pull_request, token).give_plus_one
+
+if response[:state] != "APPROVED"
+  puts "PR approval failed!"
+  exit 2
+end
+
+puts "Mis Dies! Pull Request aproved"
+exit 0
